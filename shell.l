@@ -20,6 +20,8 @@ void myunputc(int c) {
 
 %}
 
+%option noyywrap
+
 %%
 
 \n {
