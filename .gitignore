@@ -18,3 +18,4 @@ lex.yy.o
 y.tab.cc
 y.tab.hh
 y.tab.o
+shell
