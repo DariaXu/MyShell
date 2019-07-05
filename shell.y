@@ -124,13 +124,13 @@ iomodifier_opt:
     printf("   Yacc: insert error \"%s\"\n", $2->c_str());
     Shell::_currentCommand._errFile = $2;
   }
-  | /* can be empty */ 
   ;
 
 io_modifier_list:
   io_modifier_list iomodifier_opt
   | iomodifier_opt
-    ;
+  | 
+;
 
 background_opt:
   AMPERSAND{
