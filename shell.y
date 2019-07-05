@@ -55,7 +55,7 @@ command: simple_command
        ;
 
 simple_command:	
-  pipe_list iomodifier_opt background_opt NEWLINE {
+  pipe_list io_modifier_list background_opt NEWLINE {
     printf("   Yacc: Execute command\n");
     Shell::_currentCommand.execute();
   }
@@ -82,7 +82,7 @@ argument_list:
 argument:
   WORD {
     printf("   Yacc: insert argument \"%s\"\n", $1->c_str());
-    Command::_currentSimpleCommand->insertArgument( $1 );
+    Command::_currentSimpleCommand->insertArgument( $1 );\
   }
   ;
 
@@ -129,7 +129,8 @@ iomodifier_opt:
 
 io_modifier_list:
   io_modifier_list iomodifier_opt
-  | /*empty*/
+  | iomodifier_opt
+  |/*empty*/
     ;
 
 background_opt:
@@ -137,9 +138,9 @@ background_opt:
     printf("   Yacc: insert background ");
     Shell::_currentCommand._background = true;
   }
-  |{
+  | {
     Shell::_currentCommand._background = false;
-   } /*empty*/
+  }/*empty*/
   ;
 
 
