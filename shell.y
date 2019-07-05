@@ -51,7 +51,7 @@ commands:
   | commands command
   ;
 
-command: simple_command
+command: command_line
        ;
 
 simple_command:	
