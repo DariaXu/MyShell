@@ -31,9 +31,8 @@ Command::Command() {
     _inFile = NULL;
     _errFile = NULL;
     _background = false;
-    _append = false;
+     _append = false;
 }
-
 
 void Command::insertSimpleCommand( SimpleCommand * simpleCommand ) {
     // add the simple command to the vector
@@ -51,12 +50,18 @@ void Command::clear() {
     _simpleCommands.clear();
 
     if ( _outFile ) {
+        if(_outFile == _errFile){
+            _errFile = NULL;
+        }
         delete _outFile;
     }
     _outFile = NULL;
-    printf("%s",_errFile);
+    
 
     if ( _inFile ) {
+        if(_inFile == _errFile){
+            _errFile = NULL;
+        }
         delete _inFile;
     }
     _inFile = NULL;
