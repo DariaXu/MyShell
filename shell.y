@@ -52,8 +52,8 @@ commands:
   ;
 
 command: 
-  simple_command
-  |command_line
+  //simple_command
+  command_line
        ;
 
 simple_command:	
@@ -146,7 +146,7 @@ io_modifier_list:
 
 background_opt:
   AMPERSAND{
-  printf("   Yacc: insert background \n");
+  printf("   Yacc: insert background ");
     Shell::_currentCommand._background = true;
   }
   | /*empty*/
