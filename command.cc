@@ -34,6 +34,7 @@ Command::Command() {
     _append = false;
 }
 
+
 void Command::insertSimpleCommand( SimpleCommand * simpleCommand ) {
     // add the simple command to the vector
     _simpleCommands.push_back(simpleCommand);
@@ -53,6 +54,7 @@ void Command::clear() {
         delete _outFile;
     }
     _outFile = NULL;
+    printf("%c",_errFile);
 
     if ( _inFile ) {
         delete _inFile;
