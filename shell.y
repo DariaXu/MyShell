@@ -34,8 +34,6 @@
 //#define yylex yylex
 #include <cstdio>
 #include "shell.hh"
-#include<stdio.h> 
-#include<string.h>
 
 void yyerror(const char * s);
 int yylex();
@@ -99,32 +97,32 @@ command_word:
 iomodifier_opt:
   GREAT WORD {
     printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = strdup($2);
+    Shell::_currentCommand._outFile = $2->c_str();
   }
   |GREATGREAT WORD
   {
     printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = strdup($2);
+    Shell::_currentCommand._outFile = $2->c_str();
     Shell::_currentCommand._append = true;
   }
   | GREATGREATAMPERSAND WORD {
     printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = strdup($2);
-    Shell::_currentCommand._errFile = strdup($2);
+    Shell::_currentCommand._outFile = $2->c_str();
+    Shell::_currentCommand._errFile = $2->c_str();
     Shell::_currentCommand._append = true;
   }
   | GREATAMPERSAND WORD{
     printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = strdup($2);
-    Shell::_currentCommand._errFile = strdup($2);
+    Shell::_currentCommand._outFile = $2->c_str();
+    Shell::_currentCommand._errFile = $2->c_str();
   }
   | LESS WORD{
     printf("   Yacc: insert input \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._inFile = strdup($2);
+    Shell::_currentCommand._inFile = $2->c_str();
   }
   | TWOGREAT WORD{
     printf("   Yacc: insert error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._errFile = strdup($2);
+    Shell::_currentCommand._errFile = $2->c_str();
   }
   ;
 
