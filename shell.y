@@ -51,7 +51,7 @@ commands:
   | commands command
   ;
 
-command: command_line
+command: simple_command
        ;
 
 simple_command:	
@@ -66,16 +66,6 @@ simple_command:
 pipe_list:
   pipe_list PIPE command_and_args | command_and_args
   ;
-
-command_line:
-  pipe_list io_modifier_list background_opt NEWLINE {
-    printf("   Yacc: Execute command\n");
-    Shell::_currentCommand.execute();
-  }
-  | NEWLINE /*accept empty cmd line*/ 
-  | error NEWLINE{yyerrok;}
-               /*error recovery*/
-;
 
 command_and_args:
   command_word argument_list {
@@ -147,7 +137,9 @@ background_opt:
     printf("   Yacc: insert background ");
     Shell::_currentCommand._background = true;
   }
-  | /*empty*/
+  |{
+    Shell::_currentCommand._background = false;
+   } /*empty*/
   ;
 
 
