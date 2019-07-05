@@ -54,7 +54,7 @@ void Command::clear() {
         delete _outFile;
     }
     _outFile = NULL;
-    printf("%c",_errFile);
+    printf("%s",&_errFile);
 
     if ( _inFile ) {
         delete _inFile;
