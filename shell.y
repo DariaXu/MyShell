@@ -130,7 +130,6 @@ iomodifier_opt:
 io_modifier_list:
   io_modifier_list iomodifier_opt
   | iomodifier_opt
-  |/*empty*/
     ;
 
 background_opt:
