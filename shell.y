@@ -28,7 +28,7 @@
 }
 
 %token <cpp_string> WORD
-%token NOTOKEN GREAT NEWLINE
+%token NOTOKEN GREAT GREATGREAT GREATGREATAMPERSAND GREATAMPERSAND LESS TWOGREAT AMPERSAND PIPE NEWLINE
 
 %{
 //#define yylex yylex
@@ -51,7 +51,9 @@ commands:
   | commands command
   ;
 
-command: simple_command
+command: 
+  simple_command
+  |command_line
        ;
 
 simple_command:	
@@ -62,6 +64,20 @@ simple_command:
   | NEWLINE 
   | error NEWLINE { yyerrok; }
   ;
+
+pipe_list:
+  pipe_list PIPE command_and_args | command_and_args
+;
+
+command_line:
+  pipe_list io_modifier_list background_opt NEWLINE {
+    printf("   Yacc: Execute command\n");
+    Shell::_currentCommand.execute();
+  }
+  | NEWLINE /*accept empty cmd line*/ 
+  | error NEWLINE{yyerrok;}
+               /*error recovery*/
+;
 
 command_and_args:
   command_word argument_list {
@@ -95,8 +111,47 @@ iomodifier_opt:
     printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     Shell::_currentCommand._outFile = $2;
   }
+  |GREATGREAT WORD
+  {
+    printf("   Yacc: insert output \"%s\"\n", $2->c_str());
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._append = true;
+  }
+  | GREATGREATAMPERSAND WORD {
+    printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._errFile = $2;
+    Shell::_currentCommand._append = true;
+  }
+  | GREATAMPERSAND WORD{
+    printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._errFile = $2;
+  }
+  | LESS WORD{
+    printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+    Shell::_currentCommand._inFile = $2;
+  }
+  | TWOGREAT WORD{
+    printf("   Yacc: insert error \"%s\"\n", $2->c_str());
+    Shell::_currentCommand._errFile = $2;
+  }
   | /* can be empty */ 
   ;
+
+io_modifier_list:
+  io_modifier_list iomodifier_opt
+  | /*empty*/
+    ;
+
+background_optional:
+  AMPERSAND{
+  printf("   Yacc: insert background \"%s\"\n", $1->c_str());
+    Shell::_currentCommand.background = true;
+  }
+  | /*empty*/
+  ;
+
 
 %%
 

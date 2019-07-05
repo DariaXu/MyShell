@@ -8,6 +8,7 @@
 struct Command {
   std::vector<SimpleCommand *> _simpleCommands;
   std::string * _outFile;
+  bool _append;
   std::string * _inFile;
   std::string * _errFile;
   bool _background;
