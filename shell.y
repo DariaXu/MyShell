@@ -147,7 +147,7 @@ io_modifier_list:
 background_opt:
   AMPERSAND{
   printf("   Yacc: insert background \n");
-    Shell::_currentCommand.background = true;
+    Shell::_currentCommand._background = true;
   }
   | /*empty*/
   ;
