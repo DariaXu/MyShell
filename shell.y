@@ -97,32 +97,32 @@ command_word:
 iomodifier_opt:
   GREAT WORD {
     printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2->c_str();
+    Shell::_currentCommand._outFile = $2;
   }
   |GREATGREAT WORD
   {
     printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2->c_str();
+    Shell::_currentCommand._outFile = $2;
     Shell::_currentCommand._append = true;
   }
   | GREATGREATAMPERSAND WORD {
     printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2->c_str();
-    Shell::_currentCommand._errFile = $2->c_str();
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._errFile = $2;
     Shell::_currentCommand._append = true;
   }
   | GREATAMPERSAND WORD{
     printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2->c_str();
-    Shell::_currentCommand._errFile = $2->c_str();
+    Shell::_currentCommand._outFile = $2;
+    Shell::_currentCommand._errFile = $2;
   }
   | LESS WORD{
     printf("   Yacc: insert input \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._inFile = $2->c_str();
+    Shell::_currentCommand._inFile = $2;
   }
   | TWOGREAT WORD{
     printf("   Yacc: insert error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._errFile = $2->c_str();
+    Shell::_currentCommand._errFile = $2;
   }
   ;
 
