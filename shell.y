@@ -55,7 +55,7 @@ command: simple_command
        ;
 
 simple_command:	
-  command_and_args iomodifier_opt NEWLINE {
+  command_and_args iomodifier_opt backgroud_opt NEWLINE {
     printf("   Yacc: Execute command\n");
     Shell::_currentCommand.execute();
   }
@@ -144,7 +144,7 @@ io_modifier_list:
 
 background_opt:
   AMPERSAND{
-  printf("   Yacc: insert background ");
+    printf("   Yacc: insert background ");
     Shell::_currentCommand._background = true;
   }
   | /*empty*/
