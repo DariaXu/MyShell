@@ -127,7 +127,7 @@ void Command::execute()
     }
  // Print contents of Command data structure
     print();
-    
+
     // Add execution here
     // For every simple command fork a new process
     // Setup i/o redirection
@@ -141,14 +141,7 @@ void Command::execute()
     if (_inFile)
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
-       // if (fdin < 0)
-      //  {
-       //     perror("input file open");
-        //    exit(1);
-       // }
-    }
-    else
-    {
+    }else{
         // Use default input
         fdin = dup(tmpin);
     }
@@ -163,26 +156,14 @@ void Command::execute()
             if (_append)
             {
                 fdout = open(_outFile->c_str(), O_WRONLY | O_APPEND | O_CREAT, 0660);
-            }
-            else
-            {
+            } else{
                 fdout = open(_outFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
             }
-            // if (fdin < 0)
-            // {
-            //     perror("error file open");
-            //     exit(1);
-            // }
             dup2(fdout, 2);
         }
         else
         {
             fderr = open(_errFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
-          //  if (fdin < 0)
-          //  {
-          //      perror("error file open");
-             //   exit(1);
-           // }
             dup2(fderr, 2);
             close(fderr);
         }
