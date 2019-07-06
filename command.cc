@@ -126,8 +126,7 @@ void Command::execute()
         return;
     }
 
-    // Print contents of Command data structure
-    print();
+   
 
     // Add execution here
     // For every simple command fork a new process
@@ -262,7 +261,8 @@ void Command::execute()
         // Wait for last command
         waitpid(ret, NULL, 0);
     }
-
+     // Print contents of Command data structure
+    print();
     // Clear to prepare for next command
     clear();
 
