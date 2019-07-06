@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <wait.h>
+//#include <wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -142,7 +142,9 @@ void Command::execute()
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
         if(fdin<0){
-            perror("cannot open %s\n",_inFile->c_str());
+            char * a = strcat("cannot open ",_inFile->c_str());
+            char * b = strcat(a,"\n");
+            perror(b);
             exit(1);
         }
     }
@@ -167,11 +169,23 @@ void Command::execute()
             {
                 fdout = open(_outFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
             }
+            if(fdin<0){
+            char * a = strcat("cannot open ",_outFile->c_str());
+            char * b = strcat(a,"\n");
+            perror(b);
+            exit(1);
+            }
             dup2(fdout, 2);
         }
         else
         {
             fderr = open(_errFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
+             if(fdin<0){
+            char * a = strcat("cannot open ",_errFile->c_str());
+            char * b = strcat(a,"\n");
+            perror(b);
+            exit(1);
+            }
             dup2(fderr, 2);
         }
     }
@@ -201,6 +215,12 @@ void Command::execute()
                     {
                         fdout = open(_outFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
                     }
+                     if(fdin<0){
+            char * a = strcat("cannot open ",_outFile->c_str());
+            char * b = strcat(a,"\n");
+            perror(b);
+            exit(1);
+            }
                 }
             }
             else
@@ -245,8 +265,12 @@ void Command::execute()
             argv.push_back(NULL);
             //printf("%c",_simpleCommands[i]->_arguments[0]->c_str());
             execvp(argv[0], argv.data());
-            perror(" cannot access \"%s\"\n",argv[1]);
+            
+            char * a = strcat("cannot access \"",argv[1]);
+            char * b = strcat(a,"\"\n");
+            perror(b);
             exit(1);
+            
         }
     }
     //restore in/out defaults
