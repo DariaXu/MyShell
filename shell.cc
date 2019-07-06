@@ -6,11 +6,13 @@
 int yyparse(void);
 
 void Shell::prompt() {
-  printf("myshell>");
-  fflush(stdout);
+
   if ( isatty(0) ) {
     prompt();
   }
+
+  //printf("myshell>");
+  //fflush(stdout); 
 }
 
 int main() {
