@@ -282,13 +282,7 @@ void Command::execute()
             argv[_simpleCommands[i]->_arguments.size()] = NULL;
             execvp( _simpleCommands[i]->_arguments[0]->c_str(), argv);
 
-            char str[80];
-            strcpy(str, _simpleCommands[i]->_arguments[0]->c_str());
-            strcat(str,": ");
-            strcat(str, "cannot acces \"");
-            strcat(str, _outFile->c_str());
-            strcat(str, "\"");
-            perror(str);
+            perror("evecvp");
             exit(2);
         }
     }
