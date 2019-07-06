@@ -243,7 +243,7 @@ void Command::execute()
                 k++;
             }
             argv[_simpleCommands[i]->_arguments.size()] = NULL;
-            execvp(_simpleCommands[i]->_arguments[0]->c_str(), argv.data);
+            execvp(_simpleCommands[i]->_arguments[0]->c_str(), argv.data());
             perror("execvp");
             exit(1);
         }
