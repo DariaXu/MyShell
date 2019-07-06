@@ -139,11 +139,11 @@ void Command::execute()
     if (_inFile)
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
-        if (fdin < 0)
-        {
-            perror("input file open");
-            exit(1);
-        }
+       // if (fdin < 0)
+      //  {
+       //     perror("input file open");
+        //    exit(1);
+       // }
     }
     else
     {
@@ -166,21 +166,21 @@ void Command::execute()
             {
                 fdout = open(_outFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
             }
-            if (fdin < 0)
-            {
-                perror("error file open");
-                exit(1);
-            }
+            // if (fdin < 0)
+            // {
+            //     perror("error file open");
+            //     exit(1);
+            // }
             dup2(fdout, 2);
         }
         else
         {
             fderr = open(_errFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
-            if (fdin < 0)
-            {
-                perror("error file open");
-                exit(1);
-            }
+          //  if (fdin < 0)
+          //  {
+          //      perror("error file open");
+             //   exit(1);
+           // }
             dup2(fderr, 2);
             close(fderr);
         }
