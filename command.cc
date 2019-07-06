@@ -274,7 +274,7 @@ void Command::execute()
             std::vector<char *> argv(_simpleCommands[i]->_arguments.size() + 1);
             for (auto &arg : _simpleCommands[i]->_arguments)
             {
-                argv.push_back((char *)arg);
+                argv.push_back(((char *)*arg);
             }
             argv.push_back(NULL);
             //printf("%c",_simpleCommands[i]->_arguments[0]->c_str());
