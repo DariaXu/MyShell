@@ -278,17 +278,14 @@ void Command::execute()
             {
                 argv[k] = (char *)arg->c_str();
                 k++;
-           //     argv.push_back((*arg->c_str());
             }
             argv[_simpleCommands[i]->_arguments.size()] = NULL;
-            //argv.push_back(NULL);
-            //printf("%c",_simpleCommands[i]->_arguments[0]->c_str());
             execvp( _simpleCommands[i]->_arguments[0]->c_str(), argv);
 
             char str[80];
             strcpy(str, _simpleCommands[i]->_arguments[0]->c_str());
             strcat(str,": ");
-            strcat(str, "cannot access \"");
+            strcat(str, "cannot acces \"");
             strcat(str, _outFile->c_str());
             strcat(str, "\"");
             perror(str);
