@@ -145,7 +145,7 @@ void Command::execute()
             strcpy(str, "cannot open ");
             strcat(str, _inFile->c_str());
             perror(str);
-            exit(1);
+            exit(2);
         }
     }
     else
@@ -176,7 +176,7 @@ void Command::execute()
                 strcat(str, _outFile->c_str());
             
                 perror(str);
-                exit(1);
+                exit(2);
             }
             dup2(fdout, 2);
         }
