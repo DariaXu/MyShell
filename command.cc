@@ -126,8 +126,6 @@ void Command::execute()
         return;
     }
 
-   
-
     // Add execution here
     // For every simple command fork a new process
     // Setup i/o redirection
@@ -141,10 +139,14 @@ void Command::execute()
     if (_inFile)
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
-        if(fdin<0){
-            char * a = strcat("cannot open ",_inFile->c_str());
-            char * b = strcat(a,"\n");
-            perror(b);
+        if (fdin < 0)
+        {
+            char str[80];
+            strcpy(str, "cannot open ");
+            strcat(str, _inFile->c_str());
+            strcat(str, "\n");
+            puts(str);
+            perror(str);
             exit(1);
         }
     }
@@ -169,22 +171,30 @@ void Command::execute()
             {
                 fdout = open(_outFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
             }
-            if(fdin<0){
-            char * a = strcat("cannot open ",_outFile->c_str());
-            char * b = strcat(a,"\n");
-            perror(b);
-            exit(1);
+            if (fdin < 0)
+            {
+                char str[80];
+                strcpy(str, "cannot open ");
+                strcat(str, _outFile->c_str());
+                strcat(str, "\n");
+                puts(str);
+                perror(str);
+                exit(1);
             }
             dup2(fdout, 2);
         }
         else
         {
             fderr = open(_errFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
-             if(fdin<0){
-            char * a = strcat("cannot open ",_errFile->c_str());
-            char * b = strcat(a,"\n");
-            perror(b);
-            exit(1);
+            if (fdin < 0)
+            {
+                char str[80];
+                strcpy(str, "cannot open ");
+                strcat(str, _errFile->c_str());
+                strcat(str, "\n");
+                puts(str);
+                perror(str);
+                exit(1);
             }
             dup2(fderr, 2);
         }
@@ -194,13 +204,15 @@ void Command::execute()
         fderr = dup(tmperr);
     }
 
-    for (int i = 0; static_cast<unsigned int>(i) < _simpleCommands.size(); i++){
+    for (int i = 0; static_cast<unsigned int>(i) < _simpleCommands.size(); i++)
+    {
         //redirect input
         dup2(fdin, 0);
         close(fdin);
 
         //setup output
-        if (static_cast<unsigned int>(i) == _simpleCommands.size() - 1){
+        if (static_cast<unsigned int>(i) == _simpleCommands.size() - 1)
+        {
             // Last simple command
             if (_outFile)
             {
@@ -215,12 +227,16 @@ void Command::execute()
                     {
                         fdout = open(_outFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
                     }
-                     if(fdin<0){
-            char * a = strcat("cannot open ",_outFile->c_str());
-            char * b = strcat(a,"\n");
-            perror(b);
-            exit(1);
-            }
+                    if (fdin < 0)
+                    {
+                        char str[80];
+                        strcpy(str, "cannot open ");
+                        strcat(str, _outFile->c_str());
+                        strcat(str, "\n");
+                        puts(str);
+                        perror(str);
+                        exit(1);
+                    }
                 }
             }
             else
@@ -228,7 +244,9 @@ void Command::execute()
                 // Use default output
                 fdout = dup(tmpout);
             }
-        }else{
+        }
+        else
+        {
             // Not last simple command
             //create pipe
             int fdpipe[2];
@@ -259,18 +277,21 @@ void Command::execute()
             close(tmpin);
             close(tmpout);
             std::vector<char *> argv(_simpleCommands[i]->_arguments.size() + 1);
-            for (auto & arg : _simpleCommands[i]->_arguments) {
-                argv.push_back((char*)arg);
+            for (auto &arg : _simpleCommands[i]->_arguments)
+            {
+                argv.push_back((char *)arg);
             }
             argv.push_back(NULL);
             //printf("%c",_simpleCommands[i]->_arguments[0]->c_str());
             execvp(argv[0], argv.data());
-            
-            char * a = strcat("cannot access \"",argv[1]);
-            char * b = strcat(a,"\"\n");
-            perror(b);
+
+            char str[80];
+            strcpy(str, "cannot access \"");
+            strcat(str, _outFile->c_str());
+            strcat(str, "\"\n");
+            puts(str);
+            perror(str);
             exit(1);
-            
         }
     }
     //restore in/out defaults
@@ -285,7 +306,7 @@ void Command::execute()
         // Wait for last command
         waitpid(ret, NULL, 0);
     }
-     // Print contents of Command data structure
+    // Print contents of Command data structure
     print();
     // Clear to prepare for next command
     clear();
