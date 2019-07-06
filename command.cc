@@ -235,14 +235,14 @@ void Command::execute()
             close(tmperr);
             close(tmpin);
             close(tmpout);
-            std::vector<char *> ar(_simpleCommands[i]->_arguments.size() + 1);
+            std::vector<char *> argv(_simpleCommands[i]->_arguments.size() + 1);
             for (auto & arg : _simpleCommands[i]->_arguments) {
-                ar.push_back((char*)arg);
+                argv.push_back((char*)arg);
             }
-            ar.push_back(NULL);
+            argv.push_back(NULL);
             //printf("%c",_simpleCommands[i]->_arguments[0]->c_str());
-            execvp(_simpleCommands[i]->_arguments[0]->c_str(), ar.data());
-            perror("execvp");
+            execvp(argv[0], argv.data());
+            perror("execvp\n");
             exit(1);
         }
     }
