@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <wait.h>
+//#include <wait.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -235,15 +235,15 @@ void Command::execute()
             close(tmperr);
             close(tmpin);
             close(tmpout);
-            char * argv[_simpleCommands[i]->_arguments.size() + 1 ];
+            std::vector<char *> argv(_simpleCommands[i]->_arguments.size() + 1);
             int k =0;
             for (auto & arg : _simpleCommands[i]->_arguments) {
                 char * t = strdup(arg ->c_str());
-                argv[k] =  (char*)t;
+                argv.push_back((char*)t);
                 k++;
             }
             argv[_simpleCommands[i]->_arguments.size()] = NULL;
-            execvp(_simpleCommands[i]->_arguments[0]->c_str(), argv);
+            execvp(_simpleCommands[i]->_arguments[0]->c_str(), argv.data);
             perror("execvp");
             exit(1);
         }
