@@ -144,7 +144,6 @@ void Command::execute()
             char str[80];
             strcpy(str, "cannot open ");
             strcat(str, _inFile->c_str());
-            puts(str);
             perror(str);
             exit(1);
         }
@@ -175,8 +174,7 @@ void Command::execute()
                 char str[80];
                 strcpy(str, "cannot open ");
                 strcat(str, _outFile->c_str());
-              
-                puts(str);
+            
                 perror(str);
                 exit(1);
             }
@@ -190,8 +188,7 @@ void Command::execute()
                 char str[80];
                 strcpy(str, "cannot open ");
                 strcat(str, _errFile->c_str());
-              
-                puts(str);
+            
                 perror(str);
                 exit(1);
             }
@@ -232,7 +229,6 @@ void Command::execute()
                         strcpy(str, "cannot open ");
                         strcat(str, _outFile->c_str());
                        
-                        puts(str);
                         perror(str);
                         exit(1);
                     }
@@ -288,7 +284,6 @@ void Command::execute()
             strcpy(str, "cannot access \"");
             strcat(str, _outFile->c_str());
             strcat(str, "\"");
-            puts(str);
             perror(str);
             exit(1);
         }
