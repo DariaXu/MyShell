@@ -142,6 +142,10 @@ void Command::execute()
     if (_inFile)
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
+        if(fdin<0){
+            perror("input file open")
+            exit(1);
+        }
     }
     else
     {
