@@ -8,11 +8,10 @@ int yyparse(void);
 void Shell::prompt() {
 
   if ( isatty(0) ) {
-    prompt();
+    printf("myshell>");
+    fflush(stdout); 
   }
-
-  //printf("myshell>");
-  //fflush(stdout); 
+  
 }
 
 int main() {
