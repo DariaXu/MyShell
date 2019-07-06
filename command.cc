@@ -272,16 +272,21 @@ void Command::execute()
             close(tmpin);
             close(tmpout);
            // std::vector<char *> argv(_simpleCommands[i]->_arguments.size() + 1);
-           // for (auto &arg : _simpleCommands[i]->_arguments)
-          //  {
+           char** argv = new char* [_simpleCommands[i]->_arguments.size() + 1];
+           int k =0;
+           for (auto &arg : _simpleCommands[i]->_arguments)
+            {
+                argv[k] = (char *)arg->c_str();
+                k++;
            //     argv.push_back((*arg->c_str());
-            //}
+            }
+            argv[_simpleCommands[i]->_arguments.size()] = NULL;
             //argv.push_back(NULL);
             //printf("%c",_simpleCommands[i]->_arguments[0]->c_str());
-            execvp( _simpleCommands[i]->_arguments[0]->c_str(), _simpleCommands[i]->*_arguments.data());
+            execvp( _simpleCommands[i]->_arguments[0]->c_str(), argv);
 
             char str[80];
-            strcpy(str, _simpleCommands[i]->*_arguments[0]->c_str());
+            strcpy(str, _simpleCommands[i]->_arguments[0]->c_str());
             strcat(str,": ");
             strcat(str, "cannot access \"");
             strcat(str, _outFile->c_str());
