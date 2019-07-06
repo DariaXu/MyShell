@@ -23,6 +23,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include<string.h> 
 
 #include <iostream>
 
@@ -176,14 +177,14 @@ void Command::execute()
         fderr = dup(tmperr);
     }
 
-    for (int i = 0; i < _simpleCommands.size(); i++)
+    for (int i = 0; (static_cast<unsigned int>(i) < _simpleCommands.size(); i++)
     {
         //redirect input
         dup2(fdin, 0);
         close(fdin);
 
         //setup output
-        if (i == _simpleCommands.size() - 1)
+        if ((static_cast<unsigned int>(i) == _simpleCommands.size() - 1)
         {
             // Last simple command
             if (_outFile)
@@ -238,16 +239,7 @@ void Command::execute()
             close(tmperr);
             close(tmpin);
             close(tmpout);
-            auto t = _simpleCommands.at(i)->_arguments;
-            char *args[t.size() + 1];
-            for (int j = 0; i < t.size(); i++)
-            {
-                const char *te = strdup(t.at(j)->c_str());
-                args[j] = (char *)te;
-                delete te;
-            }
-            args[t.size()] = NULL;
-            execvp(args[0], args);
+            execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
             perror("execvp");
             exit(1);
         }
