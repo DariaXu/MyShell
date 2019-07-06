@@ -139,11 +139,11 @@ void Command::execute()
     if (_inFile)
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
-       // if (fdin < 0)
-      //  {
-        //    perror("input file open");
-      //      exit(1);
-      //  }
+        if (fdin < 0)
+        {
+            perror("input file open");
+            exit(1);
+        }
     }
     else
     {
@@ -182,11 +182,13 @@ void Command::execute()
                 exit(1);
             }
             dup2(fderr, 2);
+            close(fderr);
         }
     }
     else
     {
         fderr = dup(tmperr);
+        close(fderr);
     }
 
     for (int i = 0; static_cast<unsigned int>(i) < _simpleCommands.size(); i++)
