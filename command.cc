@@ -282,7 +282,7 @@ void Command::execute()
 
             char str[80];
             strcpy(str, argv[0]);
-            strcat(str,": ")
+            strcat(str,": ");
             strcat(str, "cannot access \"");
             strcat(str, _outFile->c_str());
             strcat(str, "\"");
