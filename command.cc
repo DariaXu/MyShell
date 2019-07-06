@@ -235,7 +235,15 @@ void Command::execute()
             close(tmperr);
             close(tmpin);
             close(tmpout);
-            execvp(_simpleCommands[i]->_arguments[0], _simpleCommands[i]->_arguments);
+            char * argv[_simpleCommands[i]->_arguments.size() + 1 ];
+            int k =0;
+            for (auto & arg : _simpleCommands[i]->_arguments) {
+                char * t = strdup(arg ->c_str());
+                argv[k] =  (char*)t;
+                k++;
+            }
+            argv[_simpleCommands[i]->_arguments.size()] = NULL;
+            execvp(_simpleCommands[i]->_arguments[0]->c_str(), argv);
             perror("execvp");
             exit(1);
         }
