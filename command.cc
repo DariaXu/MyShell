@@ -281,11 +281,13 @@ void Command::execute()
             execvp(argv[0], argv.data());
 
             char str[80];
-            strcpy(str, "cannot access \"");
+            strcpy(str, argv[0]);
+            strcat(str,": ")
+            strcat(str, "cannot access \"");
             strcat(str, _outFile->c_str());
             strcat(str, "\"");
             perror(str);
-            exit(1);
+            exit(2);
         }
     }
     //restore in/out defaults
