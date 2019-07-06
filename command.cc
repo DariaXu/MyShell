@@ -142,7 +142,7 @@ void Command::execute()
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
         if(fdin<0){
-            perror("input file open");
+            perror("cannot open %s\n",_inFile->c_str());
             exit(1);
         }
     }
@@ -245,7 +245,7 @@ void Command::execute()
             argv.push_back(NULL);
             //printf("%c",_simpleCommands[i]->_arguments[0]->c_str());
             execvp(argv[0], argv.data());
-            perror("execvp\n");
+            perror(" cannot access \"%s\"\n",argv[1]);
             exit(1);
         }
     }
