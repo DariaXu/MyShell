@@ -23,7 +23,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include<string.h> 
+#include <string.h>
 
 #include <iostream>
 
@@ -177,15 +177,13 @@ void Command::execute()
         fderr = dup(tmperr);
     }
 
-    for (int i = 0; (static_cast<unsigned int>(i) < _simpleCommands.size(); i++)
-    {
+    for (int i = 0; static_cast<unsigned int>(i) < _simpleCommands.size(); i++){
         //redirect input
         dup2(fdin, 0);
         close(fdin);
 
         //setup output
-        if ((static_cast<unsigned int>(i) == _simpleCommands.size() - 1)
-        {
+        if (static_cast<unsigned int>(i) == _simpleCommands.size() - 1){
             // Last simple command
             if (_outFile)
             {
@@ -207,9 +205,7 @@ void Command::execute()
                 // Use default output
                 fdout = dup(tmpout);
             }
-        }
-        else
-        {
+        }else{
             // Not last simple command
             //create pipe
             int fdpipe[2];
