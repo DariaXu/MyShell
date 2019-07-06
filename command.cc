@@ -141,11 +141,8 @@ void Command::execute()
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
         if (fdin < 0)
         {
-            char str[80];
-            strcpy(str, "cannot open ");
-            strcat(str, _inFile->c_str());
-            perror(str);
-            exit(2);
+            perror("input file open");
+            exit(1);
         }
     }
     else
@@ -171,12 +168,8 @@ void Command::execute()
             }
             if (fdin < 0)
             {
-                char str[80];
-                strcpy(str, "cannot open ");
-                strcat(str, _outFile->c_str());
-            
-                perror(str);
-                exit(2);
+                perror("error file open");
+                exit(1);
             }
             dup2(fdout, 2);
         }
@@ -185,11 +178,7 @@ void Command::execute()
             fderr = open(_errFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
             if (fdin < 0)
             {
-                char str[80];
-                strcpy(str, "cannot open ");
-                strcat(str, _errFile->c_str());
-            
-                perror(str);
+                perror("error file open");
                 exit(1);
             }
             dup2(fderr, 2);
@@ -225,11 +214,7 @@ void Command::execute()
                     }
                     if (fdin < 0)
                     {
-                        char str[80];
-                        strcpy(str, "cannot open ");
-                        strcat(str, _outFile->c_str());
-                       
-                        perror(str);
+                        perror("out file open");
                         exit(1);
                     }
                 }
@@ -247,7 +232,7 @@ void Command::execute()
             int fdpipe[2];
             if (pipe(fdpipe) == -1)
             {
-                perror("pipe\n");
+                perror("pipe");
                 exit(1);
             }
 
@@ -261,7 +246,7 @@ void Command::execute()
         ret = fork();
         if (ret == -1)
         {
-            perror("fork\n");
+            perror("fork");
             exit(1);
         }
         if (ret == 0)
@@ -271,7 +256,7 @@ void Command::execute()
             close(tmperr);
             close(tmpin);
             close(tmpout);
-           // std::vector<char *> argv(_simpleCommands[i]->_arguments.size() + 1);
+
            char** argv = new char* [_simpleCommands[i]->_arguments.size() + 1];
            int k =0;
            for (auto &arg : _simpleCommands[i]->_arguments)
@@ -283,7 +268,7 @@ void Command::execute()
             execvp( _simpleCommands[i]->_arguments[0]->c_str(), argv);
 
             perror("evecvp");
-            exit(2);
+            exit(1);
         }
     }
     //restore in/out defaults
