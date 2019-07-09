@@ -145,8 +145,8 @@ void Command::execute()
 		char a[30];
 		strcpy(a,"/bin/sh: 1: cannot open ");
 		strcat(a,_inFile->c_str());
-		strcat(a,": No such file");
-		printf(a);
+		strcat(a,": No such file\n");
+		print(a);
 		exit(1);
 	}
     }else{
