@@ -240,11 +240,6 @@ void Command::execute()
         }
         if (ret == 0)
         {
-            close(fdin);
-            close(fderr);
-            close(tmperr);
-            close(tmpin);
-            close(tmpout);
 
            char** argv = new char* [_simpleCommands[i]->_arguments.size() + 1];
            int k =0;
