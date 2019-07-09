@@ -257,7 +257,7 @@ void Command::execute()
             execvp( _simpleCommands[i]->_arguments[0]->c_str(), argv);
 
             perror("evecvp");
-            _exit(1);
+            _exit();
         }
     }
     //restore in/out defaults
