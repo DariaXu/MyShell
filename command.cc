@@ -141,10 +141,10 @@ void Command::execute()
     if (_inFile)
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
-//	if(fdin < 0){
-//		perror("input file");
-//		exit(1);
-//	}
+	if(fdin < 0){
+		perror("/bin/sh: 1: cannot open %s: No uch file",_inFile->c_str());
+		exit(1);
+	}
     }else{
         // Use default input
         fdin = dup(tmpin);
@@ -201,7 +201,7 @@ void Command::execute()
                     {
                         fdout = open(_outFile->c_str(), O_WRONLY | O_CREAT | O_TRUNC, 0660);
                     }
-                    if (fdin < 0)
+                    if (fdout < 0)
                     {
                         perror("out file open");
                         exit(1);
