@@ -262,11 +262,11 @@ void Command::execute()
     close(tmpin);
     close(tmpout);
     close(tmperr);
-//    if (!_background)
-  //  {
+    if (!_background)
+    {
         // Wait for last command
-//        waitpid(ret, NULL, 0);
-   // }
+        waitpid(ret, NULL, 0);
+    }
    
     // Clear to prepare for next command
     clear();
