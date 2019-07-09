@@ -240,7 +240,7 @@ void Command::execute()
         }
         if (ret == 0)
         {
-
+		
            char** argv = new char* [_simpleCommands[i]->_arguments.size() + 1];
            int k =0;
            for (auto &arg : _simpleCommands[i]->_arguments)
@@ -262,11 +262,11 @@ void Command::execute()
     close(tmpin);
     close(tmpout);
     close(tmperr);
-    if (!_background)
-    {
+//    if (!_background)
+  //  {
         // Wait for last command
-        waitpid(ret, NULL, 0);
-    }
+//        waitpid(ret, NULL, 0);
+   // }
    
     // Clear to prepare for next command
     clear();
