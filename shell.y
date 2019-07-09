@@ -98,9 +98,10 @@ iomodifier_opt:
   GREAT WORD {
    // printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     if(Shell::currentCommand._outFile != NULL){
-	error	
+	printf("Ambiguous output redirect.");
+    }else{
+    	Shell::_currentCommand._outFile = $2;
     }
-    Shell::_currentCommand._outFile = $2;
   }
   |GREATGREAT WORD
   {
