@@ -142,7 +142,7 @@ void Command::execute()
     {
         fdin = open(_inFile->c_str(), O_RDONLY, 0440);
 	if(fdin < 0){
-		char* a[30];
+		char a[30];
 		strcpy(a,"/bin/sh: 1: cannot open ");
 		strcat(a,_inFile->c_str());
 		strcat(a,": No uch file");
