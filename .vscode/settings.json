@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.y": "shellscript",
+        "locale": "cpp",
+        "stdexcept": "cpp",
+        "string": "cpp"
+    }
+}

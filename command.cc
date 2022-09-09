@@ -123,6 +123,7 @@ void Command::execute()
     if (_simpleCommands.size() == 0)
     {
         Shell::prompt();
+        //2.6
         return;
     }
  // Print contents of Command data structure
@@ -140,15 +141,15 @@ void Command::execute()
     //set the initial input int fdin;
     if (_inFile)
     {
-        fdin = open(_inFile->c_str(), O_RDONLY, 0440);
-	if(fdin < 0){
-		char a[30];
-		strcpy(a,"/bin/sh: 1: cannot open ");
-		strcat(a,_inFile->c_str());
-		strcat(a,": No such file\n");
-		printf("%s",a);
-		exit(1);
-	}
+            fdin = open(_inFile->c_str(), O_RDONLY, 0440);
+	        if(fdin < 0){
+		        char a[30];
+	            strcpy(a,"/bin/sh: 1: cannot open ");
+		        strcat(a,_inFile->c_str());
+	            strcat(a,": No such file\n");
+		        printf("%s",a);
+                exit(1);
+            }
     }else{
         // Use default input
         fdin = dup(tmpin);

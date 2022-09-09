@@ -15,6 +15,7 @@
 {
 #include <string>
 
+
 #if __cplusplus > 199711L
 #define register      // Deprecated in C++11 so remove the keyword
 #endif
@@ -58,6 +59,7 @@ simple_command:
   pipe_list io_modifier_list background_opt NEWLINE {
    // printf("   Yacc: Execute command\n");
     Shell::_currentCommand.execute();
+
   }
   | NEWLINE 
   | error NEWLINE { yyerrok; }
@@ -98,7 +100,7 @@ iomodifier_opt:
   GREAT WORD {
    // printf("   Yacc: insert output \"%s\"\n", $2->c_str());
     if(Shell::_currentCommand._outFile != NULL){
-	printf("Ambiguous output redirect.\n");
+	    printf("Ambiguous output redirect.\n");
     }else{
     	Shell::_currentCommand._outFile = $2;
     }
@@ -106,27 +108,51 @@ iomodifier_opt:
   |GREATGREAT WORD
   {
    // printf("   Yacc: insert output \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2;
-    Shell::_currentCommand._append = true;
+   if(Shell::_currentCommand._outFile != NULL){
+	    printf("Ambiguous output redirect.\n");
+    }else{
+      Shell::_currentCommand._outFile = $2;
+      Shell::_currentCommand._append = true;
+    }
   }
   | GREATGREATAMPERSAND WORD {
    // printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2;
-    Shell::_currentCommand._errFile = $2;
-    Shell::_currentCommand._append = true;
+   if(Shell::_currentCommand._outFile != NULL){
+	    printf("Ambiguous output redirect.\n");
+    }else if (Shell::_currentCommand._errFile != NULL){
+       printf("Ambiguous error redirect.\n");  
+    }else{
+      Shell::_currentCommand._outFile = $2;
+      Shell::_currentCommand._errFile = $2;
+      Shell::_currentCommand._append = true;
+    }
   }
   | GREATAMPERSAND WORD{
   //  printf("   Yacc: insert output and error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._outFile = $2;
-    Shell::_currentCommand._errFile = $2;
+  if(Shell::_currentCommand._outFile != NULL){
+	    printf("Ambiguous output redirect.\n");
+    }else if (Shell::_currentCommand._errFile != NULL){
+       printf("Ambiguous error redirect.\n");  
+    }else{
+      Shell::_currentCommand._outFile = $2;
+      Shell::_currentCommand._errFile = $2;
+    }
   }
   | LESS WORD{
   //  printf("   Yacc: insert input \"%s\"\n", $2->c_str());
+  if(Shell::_currentCommand._inFile != NULL){
+	    printf("Ambiguous input redirect.\n");
+    }else{
     Shell::_currentCommand._inFile = $2;
+    }
   }
   | TWOGREAT WORD{
    // printf("   Yacc: insert error \"%s\"\n", $2->c_str());
-    Shell::_currentCommand._errFile = $2;
+   if (Shell::_currentCommand._errFile != NULL){
+       printf("Ambiguous error redirect.\n");  
+    }else{
+      Shell::_currentCommand._errFile = $2;
+    }
   }
   ;
 
